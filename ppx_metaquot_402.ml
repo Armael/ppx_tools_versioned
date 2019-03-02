@@ -101,23 +101,17 @@ module Main : sig end = struct
   let get_exp loc = function
     | PStr [ {pstr_desc=Pstr_eval (e, _); _} ] -> e
     | _ ->
-        Format.eprintf "%aExpression expected@."
-          Location.print_error loc;
-        exit 2
+        Location.raise_errorf ~loc "Expression expected"
 
   let get_typ loc = function
     | PTyp t -> t
     | _ ->
-        Format.eprintf "%aType expected@."
-          Location.print_error loc;
-        exit 2
+        Location.raise_errorf ~loc "Type expected"
 
   let get_pat loc = function
     | PPat (t, None) -> t
     | _ ->
-        Format.eprintf "%aPattern expected@."
-          Location.print_error loc;
-        exit 2
+        Location.raise_errorf ~loc "Pattern expected"
 
   let exp_lifter loc map =
     let map = map.Ast_mapper.expr map in
